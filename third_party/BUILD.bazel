@@ -1,0 +1,2 @@
+# Marker package so `//third_party:pybind11.BUILD` and `//third_party:minizip.BUILD`
+# are resolvable as labels from MODULE.bazel.

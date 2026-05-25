@@ -1,0 +1,41 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+cc_test(
+    name = "test_status",
+    srcs = ["status/trace_test.cpp"],
+    deps = [
+        "@aifocore-cpp//:status",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "test_ndarray",
+    srcs = ["math/ndarray_test.cpp"],
+    deps = [
+        "@aifocore-cpp//:ndarray",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "test_ndarray_operators",
+    srcs = ["math/ndarray_operators_test.cpp"],
+    deps = [
+        "@aifocore-cpp//:ndarray",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "test_ndarray_functions",
+    srcs = ["math/ndarray_functions_test.cpp"],
+    deps = [
+        "@aifocore-cpp//:ndarray",
+        "@googletest//:gtest",
+        "@googletest//:gtest_main",
+    ],
+)
