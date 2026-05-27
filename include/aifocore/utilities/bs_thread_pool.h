@@ -377,7 +377,7 @@ struct [[nodiscard]] pr_task {
 #ifdef __cpp_concepts
 #define BS_THREAD_POOL_IF_PAUSE_ENABLED \
   template <bool P = pause_enabled>     \
-  requires(P)
+    requires(P)
 template <typename F>
 concept init_func_c = std::invocable<F> || std::invocable<F, std::size_t>;
 #define BS_THREAD_POOL_INIT_FUNC_CONCEPT(F) init_func_c F
@@ -619,7 +619,7 @@ class [[nodiscard]] blocks {
  * `BS::thread_pool`.
  */
 struct wait_deadlock : public std::runtime_error {
-  wait_deadlock() : std::runtime_error("BS::wait_deadlock"){};
+  wait_deadlock() : std::runtime_error("BS::wait_deadlock") {};
 };
 #endif
 
@@ -759,8 +759,8 @@ inline bool set_os_process_affinity(const std::vector<bool>& affinity) {
   return sched_setaffinity(getpid(), sizeof(cpu_set_t), &cpu_set) == 0;
 #elif defined(__APPLE__)
   return affinity[0] &&
-         false;  // NOLINT(readability-simplify-boolean-expr) // Using `affinity`
-                 // to suppress unused parameter warning.
+         false;  // NOLINT(readability-simplify-boolean-expr) // Using
+                 // `affinity` to suppress unused parameter warning.
 #endif
 }
 
@@ -1132,8 +1132,8 @@ class [[nodiscard]] this_thread {
         case PRIO_MAX - 3:
           return os_thread_priority::lowest;
 #ifdef __APPLE__
-        // `SCHED_IDLE` doesn't exist on macOS, so we use the policy `SCHED_OTHER`
-        // with a "nice" value of `PRIO_MAX - 2`.
+        // `SCHED_IDLE` doesn't exist on macOS, so we use the policy
+        // `SCHED_OTHER` with a "nice" value of `PRIO_MAX - 2`.
         case PRIO_MAX - 2:
           return os_thread_priority::idle;
 #endif
@@ -1242,8 +1242,8 @@ class [[nodiscard]] this_thread {
         // (the default). This policy does not accept a priority value, so
         // priority must be 0. However, we set the "nice" value to the minimum
         // value as given by `PRIO_MIN`, plus 2 (which should evaluate to -18).
-        // The usual range is -20 to 19 or 20, with higher values corresponding to
-        // lower priorities.
+        // The usual range is -20 to 19 or 20, with higher values corresponding
+        // to lower priorities.
         policy = SCHED_OTHER;
         param.sched_priority = 0;
         nice_val = PRIO_MIN + 2;
@@ -1258,15 +1258,16 @@ class [[nodiscard]] this_thread {
       case os_thread_priority::below_normal:
         // "Below normal" pre-defined priority: We use the policy `SCHED_OTHER`,
         // priority must be 0, and we set the "nice" value to half the maximum
-        // value as given by `PRIO_MAX`, rounded up (which should evaluate to 10).
+        // value as given by `PRIO_MAX`, rounded up (which should evaluate to
+        // 10).
         policy = SCHED_OTHER;
         param.sched_priority = 0;
         nice_val = (PRIO_MAX / 2) + (PRIO_MAX % 2);
         break;
       case os_thread_priority::lowest:
         // "Lowest" pre-defined priority: We use the policy `SCHED_OTHER`,
-        // priority must be 0, and we set the "nice" value to the maximum value as
-        // given by `PRIO_MAX`, minus 3 (which should evaluate to 17).
+        // priority must be 0, and we set the "nice" value to the maximum value
+        // as given by `PRIO_MAX`, minus 3 (which should evaluate to 17).
         policy = SCHED_OTHER;
         param.sched_priority = 0;
         nice_val = PRIO_MAX - 3;
