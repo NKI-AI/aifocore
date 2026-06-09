@@ -33,6 +33,10 @@
 #include <sys/types.h>
 #include <windows.h>
 
+// MSVC has no POSIX ssize_t; SSIZE_T (from <windows.h> / <BaseTsd.h>) is the
+// matching signed size type.
+using ssize_t = SSIZE_T;
+
 // Map POSIX types/functions to Windows equivalents
 using portable_stat_struct = struct _stat64;
 
