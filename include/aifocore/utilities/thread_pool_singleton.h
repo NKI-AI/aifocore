@@ -237,6 +237,11 @@ class ThreadPoolManager {
   /// The returned pool automatically executes tasks inline when submitted
   /// from worker threads, preventing deadlocks from nested task submission.
   ///
+  /// After fork(), the child does not use the pool it inherited (its threads
+  /// do not exist there): the first call in the child creates a new pool with
+  /// the parent's number of threads. References obtained before the fork
+  /// must not be used in the child.
+  ///
   /// @return Reference to the global InlineThreadPool
   static InlineThreadPool& GetInstance();
 
@@ -244,7 +249,8 @@ class ThreadPoolManager {
   ///
   /// Resets the thread pool with the specified number of threads. Can be
   /// called before or after GetInstance(). If called after tasks have been
-  /// submitted, waits for all existing tasks to complete before resetting.
+  /// submitted, waits for the running tasks to complete before resetting;
+  /// queued tasks run on the new threads.
   ///
   /// @param count Number of threads to use (0 = use hardware_concurrency)
   static void SetThreadCount(std::size_t count);
